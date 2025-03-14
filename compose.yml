@@ -17,8 +17,6 @@ services:
             timeout: 5s
             retries: 10
             start_period: 5s
-        secrets:
-            - oracle_dba_pwd
 
     ords:
         depends_on:
