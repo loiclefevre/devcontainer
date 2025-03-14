@@ -1,0 +1,16 @@
+services:
+  db:
+    image: gvenzl/oracle-free:23-slim
+    container_name: db
+    restart: always
+    ports:
+      - "1521:1521"
+    environment:
+      ORACLE_PASSWORD: free
+      APP_USER: developer
+      APP_USER_PASSWORD: free
+    volumes:
+      - oracle-volume:/opt/oracle/oradata
+
+volumes:
+  oracle-volume:
