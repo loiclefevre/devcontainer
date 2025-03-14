@@ -23,14 +23,17 @@ services:
             oraclefree:
                 condition: service_healthy
 
-        image: container-registry.oracle.com/database/ords-developer:24.4.0
+        image: loiclefevre/ords-ol8:latest
+        environment:
+            DB_HOSTNAME: devcontainer-oraclefree-1
+            DB_SERVICE: freepdb1
+            SYS_PASSWORD: free
         networks:
             - ora_app_network
-        volumes:
-            - ords_config_vol:/etc/ords/config
-            - ./setup:/opt/oracle/variables:Z
         ports:
-            - 8181:8181
+            - 27017:27017
+            - 8080:8080
+            - 8443:8443
 
 volumes:
     ora_db_vol:

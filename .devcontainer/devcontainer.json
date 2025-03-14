@@ -14,7 +14,7 @@
 	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	"forwardPorts": [1521,8181],
+	"forwardPorts": [1521,8181,8080,8443,27017],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	"postCreateCommand": "docker compose up -d"
