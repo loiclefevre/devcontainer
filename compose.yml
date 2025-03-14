@@ -1,16 +1,44 @@
 services:
-  db:
-    image: gvenzl/oracle-free:23-slim-faststart
-    container_name: db
-    restart: always
-    ports:
-      - "1521:1521"
-    environment:
-      ORACLE_PASSWORD: free
-      APP_USER: developer
-      APP_USER_PASSWORD: free
-    volumes:
-      - oracle-volume:/opt/oracle/oradata
+    oraclefree:
+        image: ghcr.io/gvenzl/oracle-free:23.7-slim-faststart
+        ports:
+            - 1521:1521
+        environment:
+            ORACLE_PASSWORD: free
+            APP_USER: developer
+            APP_USER_PASSWORD: free
+        volumes:
+            - ora_db_vol:/opt/oracle/oradata
+        networks:
+            - ora_app_network
+        healthcheck:
+            test: [ "CMD", "/opt/oracle/healthcheck.sh" ]
+            interval: 10s
+            timeout: 5s
+            retries: 10
+            start_period: 5s
+        environment:
+            - ORACLE_PASSWORD=secret
+        secrets:
+            - oracle_dba_pwd
+
+    ords:
+        depends_on:
+            oraclefree:
+                condition: service_healthy
+
+        image: container-registry.oracle.com/database/ords-developer:24.4.0
+        networks:
+            - ora_app_network
+        volumes:
+            - ords_config_vol:/etc/ords/config
+            - ./setup:/opt/oracle/variables:Z
+        ports:
+            - 8181:8181
 
 volumes:
-  oracle-volume:
+    ora_db_vol:
+    ords_config_vol:
+
+networks:
+    ora_app_network:
