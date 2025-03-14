@@ -1,6 +1,6 @@
 services:
     oraclefree:
-        image: ghcr.io/gvenzl/oracle-free:23.7-slim-faststart
+        image: ghcr.io/gvenzl/oracle-free:23.7-faststart
         ports:
             - 1521:1521
         environment:
