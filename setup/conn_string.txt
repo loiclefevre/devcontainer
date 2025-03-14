@@ -1,1 +1,1 @@
-CONN_STRING=sys/free@db_1/freepdb1
+CONN_STRING=sys/free@devcontainer-oraclefree-1:1521/freepdb1
